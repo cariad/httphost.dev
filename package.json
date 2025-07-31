@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@prantlf/jsonlint": "^16.0.0"
+  }
+}
