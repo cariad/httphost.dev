@@ -18,4 +18,4 @@ jobs:
             npm-
 
       - run: npm install
-      - run: npx jsonlint -q '**/*.json' '.devcontainer/*.json'
+      - run: npx jsonlint -q "**/*.json" ".*/*.json"
