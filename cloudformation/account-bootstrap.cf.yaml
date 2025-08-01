@@ -78,11 +78,9 @@ Resources:
             Effect: Allow
             Resource: "*"
 
+            # We can't restrict bucket creation by tag.
           - Action:
               - s3:CreateBucket
-            Condition:
-              "Null":
-                # Pass if "httphost.dev:domain" is not null.
-                aws:RequestTag/httphost.dev:domain: false
+              - s3:PutBucketTagging
             Effect: Allow
             Resource: "*"
