@@ -9,8 +9,8 @@ if [[ -z "${domain}" ]]; then
   exit 1
 fi
 
-safe_domain="${domain//./}"
-stack_name="httphostdev-website-${safe_domain}-bootstrap"
+name_safe_domain="${domain//./}"
+stack_name="httphostdev-website-${name_safe_domain}-bootstrap"
 
 aws cloudformation deploy \
   --parameter-overrides \
