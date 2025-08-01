@@ -15,7 +15,56 @@ Parameters:
       "www.example.com")
     Type: String
 
+  CertificateArn:
+    Description: ARN of the domain's TLS certificate
+    Type: String
+
 Resources:
+  Distribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - Ref: ApexDomain
+          - Fn::Sub: www.${ApexDomain}
+        Comment:
+          Fn::Sub: Deployed by httphost.dev for ${ApexDomain}
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          # CachingOptimized
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          Compress: true
+          TargetOriginId: web-objects-bucket
+          ViewerProtocolPolicy: redirect-to-https
+        DefaultRootObject: index.html
+        Enabled: true
+        HttpVersion: http2and3
+        IPV6Enabled: true
+        Origins:
+          - DomainName:
+              Fn::GetAtt:
+                - WebObjectsBucket
+                - RegionalDomainName
+            Id: web-objects-bucket
+            OriginAccessControlId:
+              Fn::GetAtt:
+                - OriginAccessControl
+                - Id
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+        PriceClass: PriceClass_All
+        Staging: false
+        ViewerCertificate:
+          AcmCertificateArn:
+            Ref: CertificateArn
+          MinimumProtocolVersion: TLSv1.2_2021
+          SslSupportMethod: sni-only
+
   OriginAccessControl:
     Type: AWS::CloudFront::OriginAccessControl
     Properties:

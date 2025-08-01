@@ -38,3 +38,9 @@ Resources:
       SubjectAlternativeNames:
         - Fn::Sub: www.${ApexDomain}
       ValidationMethod: DNS
+
+Outputs:
+  CertificateArn:
+    Description: ARN of the domain's TLS certificate
+    Value:
+      Ref: Certificate
