@@ -19,3 +19,4 @@ jobs:
 
       - run: npm install
       - run: npx jsonlint -q "**/*.json" ".*/*.json"
+      - run: npx yaml-lint "**/*.yaml"

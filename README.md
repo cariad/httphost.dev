@@ -6,7 +6,7 @@ Before you can deploy any hosting infrastructure to your Amazon Web Services acc
 
 As a powerful user, manually:
 
-1. Deploy [cloudformation/bootstrap.cf.yml](cloudformation/bootstrap.cf.yml) with the stack name `httphostdev-bootstrap`.
+1. Deploy [cloudformation/bootstrap.cf.yaml](cloudformation/bootstrap.cf.yaml) with the stack name `httphostdev-bootstrap`.
 1. Attach the Managed Policy `httphost.dev-ManageWebsiteInfrastructure-{REGION}` to roles and users that need to deploy hosting infrastructure.
 
 ## Deploying a new website

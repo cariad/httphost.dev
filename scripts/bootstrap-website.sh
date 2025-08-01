@@ -11,7 +11,7 @@ aws cloudformation deploy \
   --parameter-overrides \
       "ApexDomain=${domain}" \
   --stack-name    "${stack_name}" \
-  --template-file ./cloudformation/website-bootstrap.cf.yml
+  --template-file ./cloudformation/website-bootstrap.cf.yaml
 
 echo
 echo "IMPORTANT: Update the name servers of ${domain} to:"
