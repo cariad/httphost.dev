@@ -36,9 +36,13 @@ Resources:
               # "httphostdev-website-*". Naming this stack
               # "httphostdev-bootstrap" will prevent the policy modifying
               # itself. This is a good thing.
-              Fn::Sub: arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/httphostdev-website-*
+              - Fn::Sub: arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/httphostdev-website-*
+
+              # Certificates must be deployed to us-east-1.
+              - Fn::Sub: arn:aws:cloudformation:us-east-1:${AWS::AccountId}:stack/httphostdev-website-*
 
           - Action:
+              - cloudformation:DescribeStacks
               - cloudformation:ValidateTemplate
             Effect: Allow
             Resource: "*"
@@ -49,10 +53,27 @@ Resources:
           #
           # https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/specifying-conditions-route53.html
           - Action:
+              - route53:ChangeResourceRecordSets
               - route53:ChangeTagsForResource
               - route53:CreateHostedZone
               - route53:DeleteHostedZone
               - route53:Get*
               - route53:List*
+            Effect: Allow
+            Resource: "*"
+
+          - Action:
+              - acm:Describe*
+              # CloudFormation doesn't pass the tags to new certificates on
+              # creation, so we can't restrict creation by "aws:RequestTag".
+              - acm:RequestCertificate
+            Effect: Allow
+            Resource: "*"
+
+          - Action: acm:*
+            Condition:
+              "Null":
+                # Pass if "httphost.dev:domain" is not null.
+                aws:RequestTag/httphost.dev:domain: false
             Effect: Allow
             Resource: "*"

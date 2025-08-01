@@ -1,0 +1,40 @@
+# This stack manages the global (not region-specific) infrastructure for a
+# website.
+#
+# Deploy once per website.
+#
+# Must be deployed to us-east-1.
+#
+# Name the stack "httphostdev-website-{DOMAIN}-global"
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: httphost.dev website global infrastructure
+
+Parameters:
+  ApexDomain:
+    Description: Apex domain of the site to deploy (e.g. "example.com" and not
+      "www.example.com")
+    Type: String
+
+  HostedZoneId:
+    Description: ID of the domain's Hosted Zone
+    Type: String
+
+Resources:
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName:
+        Ref: ApexDomain
+      DomainValidationOptions:
+        - DomainName:
+            Ref: ApexDomain
+          HostedZoneId:
+            Ref: HostedZoneId
+        - DomainName:
+            Fn::Sub: www.${ApexDomain}
+          HostedZoneId:
+            Ref: HostedZoneId
+      SubjectAlternativeNames:
+        - Fn::Sub: www.${ApexDomain}
+      ValidationMethod: DNS

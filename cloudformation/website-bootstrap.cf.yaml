@@ -22,10 +22,6 @@ Resources:
     Properties:
       HostedZoneConfig:
         Comment: Deployed by httphost.dev
-      HostedZoneTags:
-        - Key: httphost.dev:domain
-          Value:
-            Ref: ApexDomain
       Name:
         Ref: ApexDomain
 
