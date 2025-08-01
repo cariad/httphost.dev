@@ -18,7 +18,7 @@ jobs:
             npm-
 
       - run: npm install
-      - run: npx jsonlint -q "**/*.json" ".*/*.json"
+      - run: npx jsonlint
       - run: npx yaml-lint "**/*.yaml"
 
   validate_cloudformation:
