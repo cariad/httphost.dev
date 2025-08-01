@@ -16,13 +16,13 @@ As a powerful user, manually:
 As any role or user with permission to manage website infrastructure, run:
 
 ```bash
-./bootstrap-website.sh <DOMAIN>
+./scripts/bootstrap-website.sh <DOMAIN>
 ```
 
 For example:
 
 ```bash
-./bootstrap-website.sh example.com
+./scripts/bootstrap-website.sh example.com
 ```
 
 The script will print a list of name servers which you must apply to the domain in your registrar. The script cannot do this for you.
