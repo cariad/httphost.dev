@@ -92,12 +92,12 @@ Resources:
         Version: 2012-10-17
         Statement:
           - Action: s3:GetObject
+            Condition:
+              StringEquals:
+                AWS:SourceArn:
+                  Fn::Sub: arn:aws:cloudfront::${AWS::AccountId}:distribution/${Distribution}
             Effect: Allow
             Principal:
               Service: cloudfront.amazonaws.com
             Resource:
               Fn::Sub: arn:aws:s3:::${WebObjectsBucket}/*
-            Condition:
-              StringEquals:
-                AWS:SourceArn:
-                  Fn::Sub: arn:aws:cloudfront::${AWS::AccountId}:distribution/${Distribution}
