@@ -6,28 +6,32 @@ Before you can deploy any hosting infrastructure to your Amazon Web Services acc
 
 As a powerful user, manually:
 
-1. Deploy [cloudformation/bootstrap.cf.yaml](cloudformation/bootstrap.cf.yaml) with the stack name `httphostdev-bootstrap`.
+1. Deploy [cloudformation/account-bootstrap.cf.yaml](cloudformation/account-bootstrap.cf.yaml) with the stack name `httphostdev-bootstrap`.
 1. Attach the Managed Policy `httphost.dev-ManageWebsiteInfrastructure-{REGION}` to roles and users that need to deploy hosting infrastructure.
 
 ## Deploying a new website
 
-### Preparing the infrastructure
+### Bootstrapping the infrastructure
 
 As any role or user with permission to manage website infrastructure, run:
 
 ```bash
-./scripts/bootstrap-website.sh <DOMAIN>
+./scripts/deploy-website-bootstrap.sh <DOMAIN>
 ```
 
 For example:
 
 ```bash
-./scripts/bootstrap-website.sh example.com
+./scripts/deploy-website-bootstrap.sh example.com
 ```
 
 The script will print a list of name servers which you must apply to the domain in your registrar. The script cannot do this for you.
 
-TODO
+When the name servers have been applied to your domain, run:
+
+```bash
+./scripts/deploy-website-infrastructure.sh <DOMAIN>
+```
 
 ### Publishing content
 
