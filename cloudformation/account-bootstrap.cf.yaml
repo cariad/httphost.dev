@@ -87,6 +87,7 @@ Resources:
             # We can't restrict bucket creation by tag.
           - Action:
               - s3:CreateBucket
+              - s3:PutBucketPolicy
               - s3:PutBucketTagging
             Effect: Allow
             Resource: "*"
