@@ -29,6 +29,7 @@ aws cloudformation deploy \
   --region              us-east-1
 
 aws cloudformation deploy \
-  --stack-name    "${stack_name_prefix}-regional" \
-  --tags          "httphost.dev:domain=${domain}" \
-  --template-file ./cloudformation/website-regional.cf.yaml
+  --parameter-overrides "ApexDomain=${domain}" \
+  --stack-name          "${stack_name_prefix}-regional" \
+  --tags                "httphost.dev:domain=${domain}" \
+  --template-file       ./cloudformation/website-regional.cf.yaml
