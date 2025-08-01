@@ -8,7 +8,7 @@
 # Name the stack "httphostdev-bootstrap".
 
 AWSTemplateFormatVersion: 2010-09-09
-Description: httphost.dev bootstrap
+Description: httphost.dev account bootstrap
 
 Resources:
   # A managed policy that grants permission to deploy per-website
@@ -71,6 +71,15 @@ Resources:
             Resource: "*"
 
           - Action: acm:*
+            Condition:
+              "Null":
+                # Pass if "httphost.dev:domain" is not null.
+                aws:RequestTag/httphost.dev:domain: false
+            Effect: Allow
+            Resource: "*"
+
+          - Action:
+              - s3:CreateBucket
             Condition:
               "Null":
                 # Pass if "httphost.dev:domain" is not null.

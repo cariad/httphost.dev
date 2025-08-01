@@ -1,0 +1,15 @@
+# This stack manages the regional infrastructure for a website.
+#
+# Deploy once per website.
+#
+# Deploy to any region.
+#
+# Name the stack "httphostdev-website-{DOMAIN}-regional"
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: httphost.dev website regional infrastructure
+
+Resources:
+  WebObjectsBucket:
+    Type: AWS::S3::Bucket
+    Properties: {}
