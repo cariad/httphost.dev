@@ -1,5 +1,6 @@
 {
   "devDependencies": {
-    "@prantlf/jsonlint": "^16.0.0"
+    "@prantlf/jsonlint": "^16.0.0",
+    "yaml-lint": "^1.7.0"
   }
 }

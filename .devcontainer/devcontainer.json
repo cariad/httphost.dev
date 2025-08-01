@@ -1,8 +1,15 @@
 {
-	"image": "mcr.microsoft.com/devcontainers/universal:2",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"esbenp.prettier-vscode"
+			]
+		}
+	},
 	"features": {
 		"ghcr.io/devcontainers/features/aws-cli:1": {}
 	},
+	"image": "mcr.microsoft.com/devcontainers/universal:2",
 	"secrets": {
 		"AWS_ACCESS_KEY_ID": {},
 		"AWS_SECRET_ACCESS_KEY": {}

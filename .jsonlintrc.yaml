@@ -1,0 +1,5 @@
+patterns:
+  - "**/*.json"
+  - ".*/*.json"
+  - "!**/node_modules"
+quiet: true
