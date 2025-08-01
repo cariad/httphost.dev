@@ -2,7 +2,12 @@
 
 set -euo pipefail
 
-domain="${1}"
+domain="${1:-}"
+
+if [[ -z "${domain}" ]]; then
+  echo "USAGE: ${0} example.com" >&2
+  exit 1
+fi
 
 safe_domain="${domain//./}"
 stack_name="httphostdev-website-${safe_domain}-bootstrap"
