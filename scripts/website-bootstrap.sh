@@ -16,6 +16,8 @@ aws cloudformation deploy \
   --parameter-overrides \
       "ApexDomain=${domain}" \
   --stack-name    "${stack_name}" \
+  --tags \
+      "httphost.dev:domain=${domain}" \
   --template-file ./cloudformation/website-bootstrap.cf.yaml
 
 echo
