@@ -38,6 +38,11 @@ Resources:
               # itself. This is a good thing.
               Fn::Sub: arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/httphostdev-website-*
 
+          - Action:
+              - cloudformation:ValidateTemplate
+            Effect: Allow
+            Resource: "*"
+
           # We'll add a "httphost.dev:domain" tag to the Hosted Zones that we
           # deploy, but Route 53 doesn't support tag-based condition keys to
           # restrict these APIs. 😢 One day, hopefully!
