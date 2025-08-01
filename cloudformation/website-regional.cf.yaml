@@ -9,7 +9,27 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: httphost.dev website regional infrastructure
 
+Parameters:
+  ApexDomain:
+    Description: Apex domain of the site to deploy (e.g. "example.com" and not
+      "www.example.com")
+    Type: String
+
 Resources:
+  OriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Description:
+          Fn::Sub:
+            Deployed by httphost.dev to host ${ApexDomain} from bucket
+            ${WebObjectsBucket}
+        Name:
+          Fn::Sub: httphost.dev-${ApexDomain}
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
   WebObjectsBucket:
     Type: AWS::S3::Bucket
     Properties: {}
