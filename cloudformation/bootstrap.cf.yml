@@ -1,0 +1,53 @@
+# This stack bootstraps an Amazon Web Services account to prepare for website
+# hosting.
+#
+# Deploy just once per Amazon Web Services account.
+#
+# Deploy to any region.
+#
+# Name the stack "httphostdev-bootstrap".
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: httphost.dev bootstrap
+
+Resources:
+  # A managed policy that grants permission to deploy per-website
+  # infrastructure.
+  ManageWebsiteInfrastructureManagedPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description:
+        Grants permission to manage website infrastructure described by
+        httphost.dev
+      ManagedPolicyName:
+        Fn::Sub: httphost.dev-ManageWebsiteInfrastructure-${AWS::Region}
+      Path: /httphost.dev/
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - cloudformation:CreateChangeSet
+              - cloudformation:Describe*
+              - cloudformation:ExecuteChangeSet
+              - cloudformation:Get*
+            Effect: Allow
+            Resource:
+              # This policy can modify only stacks named
+              # "httphostdev-website-*". Naming this stack
+              # "httphostdev-bootstrap" will prevent the policy modifying
+              # itself. This is a good thing.
+              Fn::Sub: arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/httphostdev-website-*
+
+          # We'll add a "httphost.dev:domain" tag to the Hosted Zones that we
+          # deploy, but Route 53 doesn't support tag-based condition keys to
+          # restrict these APIs. 😢 One day, hopefully!
+          #
+          # https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/specifying-conditions-route53.html
+          - Action:
+              - route53:ChangeTagsForResource
+              - route53:CreateHostedZone
+              - route53:DeleteHostedZone
+              - route53:Get*
+              - route53:List*
+            Effect: Allow
+            Resource: "*"
