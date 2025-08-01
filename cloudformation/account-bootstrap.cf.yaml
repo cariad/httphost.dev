@@ -11,8 +11,6 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: httphost.dev account bootstrap
 
 Resources:
-  # A managed policy that grants permission to deploy per-website
-  # infrastructure.
   ManageWebsiteInfrastructureManagedPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
@@ -91,3 +89,10 @@ Resources:
               - s3:PutBucketTagging
             Effect: Allow
             Resource: "*"
+
+  GitHubOidcProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      ClientIdList:
+        - sts.amazonaws.com
+      Url: https://token.actions.githubusercontent.com
